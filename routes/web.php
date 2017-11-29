@@ -18,6 +18,7 @@ $router->get('/', function () use ($router) {
 $router->post('/auth/login', 'AuthController@login');
 $router->post('/auth/register', 'AuthController@register');
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
+$router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+  $router->get('/auth/check', 'AuthController@check');
   $router->get('/students', 'ApiController@getAllStudents');
 });

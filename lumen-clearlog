@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo cat /dev/null > /home/gabriel/Desarrollo/Vue-Lumen/backend/storage/logs/lumen.log

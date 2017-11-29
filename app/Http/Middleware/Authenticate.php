@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Log;
 use Closure;
+use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
@@ -14,6 +15,7 @@ class Authenticate
      * @var \Illuminate\Contracts\Auth\Factory
      */
     protected $auth;
+    protected $jwt;
 
     /**
      * Create a new middleware instance.
@@ -21,9 +23,10 @@ class Authenticate
      * @param  \Illuminate\Contracts\Auth\Factory  $auth
      * @return void
      */
-    public function __construct(Auth $auth)
+    public function __construct(Auth $auth, JWTAuth $jwt)
     {
         $this->auth = $auth;
+        $this->jwt = $jwt;
     }
 
     /**
@@ -37,7 +40,7 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         Log::info('Guard log:');
-        Log::info($this->auth->guard($guard)->check());
+        Log::info($this->auth->guard($guard)->guest());
         if ($this->auth->guard($guard)->guest()) {
             return response('Unauthorized.', 401);
         }

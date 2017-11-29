@@ -1,0 +1,2 @@
+#!/bin/bash
+less ./storage/logs/lumen.log

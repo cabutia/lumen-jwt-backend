@@ -27,9 +27,9 @@ class AuthController extends Controller
 
       // Intentar loguear
       try {
-        if (! $token = $this->jwt->attempt($r->only('email', 'password'))) {
+        if (!$token = $this->jwt->attempt($r->only('email', 'password'))) {
           // Usuario no encontrado
-          return response('Invalid user/password', 401);
+          return response()->json(['Invalid user/password'], 401);
         }
       // Token expirado
       } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -48,6 +48,11 @@ class AuthController extends Controller
       $response = compact('token');
       $response['user'] = Auth::user();
       return response()->json($response);
+    }
+
+    public function check()
+    {
+      return response()->json(['status' => 'auth success'], 200);
     }
 
     public function register(Request $r)
